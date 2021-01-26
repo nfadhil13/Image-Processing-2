@@ -20,7 +20,7 @@ fun ImagePicker(
     startingImage : String,
     pickedImage : (imageFilePath : String) -> Unit,
     onNext : () -> Unit,
-    onBack : () -> Unit
+    onBack : (() -> Unit)? = null
 ){
     var file by remember { mutableStateOf(startingImage) }
 
@@ -48,13 +48,17 @@ fun ImagePicker(
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ){
+            onBack?.let{ it ->
+                Button(
+                    onClick = {
+                        it()
+                    },
+                    content =  {
+                        Text("Back")
+                    },
+                )
+            }
 
-            Button(
-                onClick = onBack,
-                content =  {
-                    Text("Back")
-                },
-            )
 
             Button(
                 onClick = {

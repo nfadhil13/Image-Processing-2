@@ -13,6 +13,7 @@ import model.ImageProcessor
 import nu.pattern.OpenCV
 import presentation.screen.home.HomeScreen
 import presentation.screen.stenography.Stenography
+import presentation.screen.watermark.WatermarkScreen
 import theme.MyTheme
 import util.NavigationBackstack
 
@@ -39,8 +40,8 @@ fun main() = Window {
                                 is ImageProcessor.Stenography -> {
                                     mainNavigation.addToStack(newScreen = MainScreen.StenographyMainScreen)
                                 }
-                                else -> {
-
+                                is ImageProcessor.Watermark -> {
+                                    mainNavigation.addToStack(newScreen = MainScreen.WatermarkScreen)
                                 }
                             }
                         }
@@ -50,6 +51,13 @@ fun main() = Window {
                     Stenography(onNavigationStackNull = {
                         mainNavigation.popBackStack()
                     })
+                }
+                is MainScreen.WatermarkScreen -> {
+                    WatermarkScreen(
+                        onNavigationStackNull = {
+                            mainNavigation.popBackStack()
+                        }
+                    )
                 }
             }
         }
@@ -61,4 +69,5 @@ fun main() = Window {
 sealed class MainScreen(){
     object HomeMainScreen : MainScreen()
     object StenographyMainScreen : MainScreen()
+    object WatermarkScreen : MainScreen()
 }
